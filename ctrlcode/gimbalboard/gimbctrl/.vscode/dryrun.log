@@ -1,0 +1,6 @@
+C:\MinGW\bin\make.exe --dry-run --always-make --keep-going --print-directory
+make: Entering directory 'c:/Users/admin/Desktop/MXI4-main/MXI4-main/ctrlcode/gimbalboard/gimbctrl'
+make: Leaving directory 'c:/Users/admin/Desktop/MXI4-main/MXI4-main/ctrlcode/gimbalboard/gimbctrl'
+ 
+Makefile:59: *** missing separator.  Stop.
+

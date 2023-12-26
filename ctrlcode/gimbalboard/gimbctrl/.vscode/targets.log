@@ -1,0 +1,291 @@
+C:\MinGW\bin\make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.82.90
+# Built for i686-pc-mingw32
+# Copyright (C) 1988-2012 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+ 
+
+# Make data base, printed on Thu Oct 26 19:07:15 2023
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(patsubst %\,%,$(dir $<)))
+# automatic
+?F = $(notdir $?)
+# default
+.SHELLFLAGS := -c
+# environment
+VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
+# makefile
+MAKEFLAGS = Rrqp
+# makefile (from 'Makefile', line 16)
+TARGET = gimbctrl
+# automatic
+?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
+# automatic
+@D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
+# environment
+HOMEDRIVE = C:
+# automatic
+@F = $(notdir $@)
+# automatic
+^D = $(patsubst %/,%,$(patsubst %\,%,$(dir $^)))
+# makefile
+CURDIR := c:/Users/admin/Desktop/MXI4-main/MXI4-main/ctrlcode/gimbalboard/gimbctrl
+# default
+SHELL := C:/Users/admin/.eide/bin/builder/msys/bin/sh.exe
+# environment
+WINDIR = C:\WINDOWS
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","osLocale":"zh-cn","availableLanguages":{},"_languagePackSupport":true}
+# environment
+ONEDRIVE = C:\Users\admin\OneDrive
+# environment
+PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MS 
+C
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# makefile (from 'Makefile', line 23)
+DEBUG = 1
+# environment
+TMP = C:\Users\admin\AppData\Local\Temp
+# environment
+PROGRAMW6432 = C:\Program Files
+# environment
+PROGRAMDATA = C:\ProgramData
+# environment
+VSCODE_CWD = C:\Users\admin\AppData\Local\Programs\Microsoft VS Code
+# environment
+PATH = C:\Users\admin\.eide\bin\builder\bin;C:\Users\admin\.eide\bin\builder\utils;C:\Users\admin\.eide\bin\scripts;c:\Users\admin\.vscode\extensions\cl.eide-3.13.2023060401\res\tools\win32\7z;c:\Users\admin\.vscode\extensions\cl.eide-3.13.2023060401\res\tools\win32\utils;C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2021.10\bin;C:\OpenOCD-20231002-0.12.0\bin;C:\Users\admin\.eide\tools\st_cube_programer\bin;C:\Users\admin\.eide\bin\builder\msys\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\CMake\bin;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2021.10\bin;C:\Users\admin\AppData\Local\Microsoft\WindowsApps;C:\Users\admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\MinGW\bin;C:\OpenOCD-20231002-0.12.0\bin;
+# environment
+COMMONPROGRAMW6432 = C:\Program Files\Common Files
+# environment
+PROCESSOR_ARCHITECTURE = x86
+# environment
+USERPROFILE = C:\Users\admin
+# environment
+ALLUSERSPROFILE = C:\ProgramData
+# environment
+EIDE_BINARIES_VER = 12.0.0
+# environment
+NUMBER_OF_PROCESSORS = 16
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver
+# automatic
+%F = $(notdir $%)
+# environment
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_21884_LLXOGTMFJCFSXOML
+# makefile (from 'Makefile', line 25)
+OPT = -Og
+# environment
+COMPUTERNAME = LAPTOP-PS1S025U
+# environment
+PROGRAMFILES = C:\Program Files (x86)
+# environment
+DRIVERDATA = C:\Windows\System32\Drivers\DriverData
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+USERNAME = admin
+# environment
+PUBLIC = C:\Users\Public
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+VSCODE_CODE_CACHE_PATH = C:\Users\admin\AppData\Roaming\Code\CachedData\f1b07bd25dfad64b0167beb15359ae573aecd2cc
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# environment
+COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
+# environment
+LOGONSERVER = \\LAPTOP-PS1S025U
+# environment
+ONEDRIVECONSUMER = C:\Users\admin\OneDrive
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# environment
+USERDOMAIN = LAPTOP-PS1S025U
+# environment
+MAKELEVEL := 0
+# environment
+EIDE_TOOL_OPENOCD = C:\OpenOCD-20231002-0.12.0\bin
+# environment
+STM32CUBEMX_PATH = C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeMX
+# default
+MAKECMDGOALS := all
+# makefile (from 'Makefile', line 32)
+BUILD_DIR = build
+# default
+MAKE_VERSION := 3.82.90
+# makefile
+.DEFAULT_GOAL := 
+# environment
+ACSVCPORT = 17532
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+ACSETUPSVCPORT = 23210
+# environment
+PROGRAMFILES(X86) = C:\Program Files (x86)
+# environment
+EIDE_MSYS = C:\Users\admin\.eide\bin\builder\msys\bin
+# automatic
+%D = $(patsubst %/,%,$(patsubst %\,%,$(dir $%)))
+# environment
+LOCALAPPDATA = C:\Users\admin\AppData\Local
+# environment
+PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+# default
+MAKE_COMMAND := C:/MinGW/bin/make
+# environment
+PROCESSOR_ARCHITEW6432 = AMD64
+# default
+.VARIABLES := 
+# automatic
+*F = $(notdir $*)
+# environment
+PROCESSOR_IDENTIFIER = AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD
+# environment
+OS = Windows_NT
+# environment
+VSCODE_IPC_HOOK = \\.\pipe\40c024692924a7e0e09c00bf44e8c2ef-1.83.1-main-sock
+# environment
+HOMEPATH = \Users\admin
+# environment
+COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
+# environment
+PROMPT = $P$G
+# environment
+MFLAGS = -Rrqp
+# automatic
+*D = $(patsubst %/,%,$(patsubst %\,%,$(dir $*)))
+# environment
+SYSTEMROOT = C:\WINDOWS
+# automatic
++D = $(patsubst %/,%,$(patsubst %\,%,$(dir $+)))
+# environment
+EIDE_TOOL_GCC_ARM = C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2021.10\bin
+# automatic
++F = $(notdir $+)
+# environment
+APPDATA = C:\Users\admin\AppData\Roaming
+# environment
+TEMP = C:\Users\admin\AppData\Local\Temp
+# environment
+COMSPEC = C:\WINDOWS\system32\cmd.exe
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# environment
+RLSSVCPORT = 22112
+# environment
+LC_ALL = C
+# automatic
+^F = $(notdir $^)
+# makefile (from 'Makefile', line 38)
+C_SOURCES = Src/main.c Src/gpio.c Src/freertos.c Src/can.c Src/dma.c Src/i2c.c Src/spi.c Src/tim.c Src/stm32f4xx_it.c Src/stm32f4xx_hal_msp.c src/main.c src/gpio.c src/freertos.c src/can.c src/dma.c src/i2c.c src/spi.c src/tim.c src/tasks/init.c 
+# default
+SUFFIXES := 
+# environment
+SYSTEMDRIVE = C:
+# environment
+SESSIONNAME = Console
+# environment
+PROCESSOR_REVISION = 5000
+# default
+.INCLUDE_DIRS = C:/MinGW/include
+# default
+.RECIPEPREFIX := 
+# environment
+LANG = C
+# environment
+PROCESSOR_LEVEL = 25
+# environment
+EFC_10152 = 1
+# environment
+VSCODE_PID = 21884
+# environment
+EIDE_TOOL_ST_CUBE_PROGRAMER = C:\Users\admin\.eide\tools\st_cube_programer\bin
+# environment
+DOTNET_CLI_TELEMETRY_OPTOUT = 1
+# environment
+USERDOMAIN_ROAMINGPROFILE = LAPTOP-PS1S025U
+# variable set hash-table stats:
+# Load=102/1024=10%, Rehash=0, Collisions=9/110=8%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# C:\OpenOCD-20231002-0.12.0\bin (key C:/OpenOCD-20231002-0.12.0/bin, mtime 1698131036): 5 files, no impossibilities.
+# C:\Users\admin\.eide\tools\st_cube_programer\bin (key C:/Users/admin/.eide/tools/st_cube_programer/bin, mtime 1641517950): 27 files, no impossibilities.
+# C:\Users\admin\.eide\bin\builder\bin (key C:/Users/admin/.eide 
+/bin/builder/bin, mtime 1681658021): 28 files, no impossibilities.
+# C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2021.10\bin (key C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2021.10/bin, mtime 1698130904): 35 files, no impossibilities.
+# . (key c:/Users/admin/Desktop/MXI4-main/MXI4-main/ctrlcode/gimbalboard/gimbctrl, mtime 1698151709): 22 files, no impossibilities.
+# C:\Users\admin\.eide\bin\scripts (key C:/Users/admin/.eide/bin/scripts, mtime 1653912323): 6 files, no impossibilities.
+# C:\Users\admin\.eide\bin\builder\msys\bin (key C:/Users/admin/.eide/bin/builder/msys/bin, mtime 1663516994): 212 files, no impossibilities so far.
+# c:\Users\admin\.vscode\extensions\cl.eide-3.13.2023060401\res\tools\win32\utils (key c:/Users/admin/.vscode/extensions/cl.eide-3.13.2023060401/res/tools/win32/utils, mtime 1698148800): 4 files, no impossibilities.
+# C:\Users\admin\.eide\bin\builder\utils (key C:/Users/admin/.eide/bin/builder/utils, mtime 1653819306): 7 files, no impossibilities.
+# c:\Users\admin\.vscode\extensions\cl.eide-3.13.2023060401\res\tools\win32\7z (key c:/Users/admin/.vscode/extensions/cl.eide-3.13.2023060401/res/tools/win32/7z, mtime 1698148800): 3 files, no impossibilities.
+
+# 349 files, no impossibilities in 10 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+all:
+#  Command line target.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# files hash-table stats:
+# Load=4/1024=0%, Rehash=0, Collisions=0/5=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 341 / storage = 4700 B / avg = 13 B
+# current buf: size = 8174 B / used = 4700 B / count = 341 / avg = 13 B
+
+# strcache performance: lookups = 365 / hit rate = 6%
+# hash-table stats:
+# Load=341/8192=4%, Rehash=0, Collisions=19/365=5%
+# Finished Make data base on Thu Oct 26 19:07:15 2023
+
+ 
+Makefile:59: *** missing separator.  Stop.
+

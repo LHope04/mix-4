@@ -1,0 +1,729 @@
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"freertos.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.INS_task,"ax",%progbits
+  20              		.align	1
+  21              		.weak	INS_task
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	INS_task:
+  27              	.LFB135:
+  28              		.file 1 "Src/freertos.c"
+   1:Src/freertos.c **** /* USER CODE BEGIN Header */
+   2:Src/freertos.c **** /**
+   3:Src/freertos.c ****   ******************************************************************************
+   4:Src/freertos.c ****   * File Name          : freertos.c
+   5:Src/freertos.c ****   * Description        : Code for freertos applications
+   6:Src/freertos.c ****   ******************************************************************************
+   7:Src/freertos.c ****   * @attention
+   8:Src/freertos.c ****   *
+   9:Src/freertos.c ****   * Copyright (c) 2022 STMicroelectronics.
+  10:Src/freertos.c ****   * All rights reserved.
+  11:Src/freertos.c ****   *
+  12:Src/freertos.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  13:Src/freertos.c ****   * in the root directory of this software component.
+  14:Src/freertos.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  15:Src/freertos.c ****   *
+  16:Src/freertos.c ****   ******************************************************************************
+  17:Src/freertos.c ****   */
+  18:Src/freertos.c **** /* USER CODE END Header */
+  19:Src/freertos.c **** 
+  20:Src/freertos.c **** /* Includes ------------------------------------------------------------------*/
+  21:Src/freertos.c **** #include "FreeRTOS.h"
+  22:Src/freertos.c **** #include "task.h"
+  23:Src/freertos.c **** #include "main.h"
+  24:Src/freertos.c **** #include "cmsis_os.h"
+  25:Src/freertos.c **** 
+  26:Src/freertos.c **** /* Private includes ----------------------------------------------------------*/
+  27:Src/freertos.c **** /* USER CODE BEGIN Includes */
+  28:Src/freertos.c **** 
+  29:Src/freertos.c **** /* USER CODE END Includes */
+  30:Src/freertos.c **** 
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s 			page 2
+
+
+  31:Src/freertos.c **** /* Private typedef -----------------------------------------------------------*/
+  32:Src/freertos.c **** /* USER CODE BEGIN PTD */
+  33:Src/freertos.c **** 
+  34:Src/freertos.c **** /* USER CODE END PTD */
+  35:Src/freertos.c **** 
+  36:Src/freertos.c **** /* Private define ------------------------------------------------------------*/
+  37:Src/freertos.c **** /* USER CODE BEGIN PD */
+  38:Src/freertos.c **** 
+  39:Src/freertos.c **** /* USER CODE END PD */
+  40:Src/freertos.c **** 
+  41:Src/freertos.c **** /* Private macro -------------------------------------------------------------*/
+  42:Src/freertos.c **** /* USER CODE BEGIN PM */
+  43:Src/freertos.c **** 
+  44:Src/freertos.c **** /* USER CODE END PM */
+  45:Src/freertos.c **** 
+  46:Src/freertos.c **** /* Private variables ---------------------------------------------------------*/
+  47:Src/freertos.c **** /* USER CODE BEGIN Variables */
+  48:Src/freertos.c **** 
+  49:Src/freertos.c **** /* USER CODE END Variables */
+  50:Src/freertos.c **** /* Definitions for INS_TASK */
+  51:Src/freertos.c **** osThreadId_t INS_TASKHandle;
+  52:Src/freertos.c **** const osThreadAttr_t INS_TASK_attributes = {
+  53:Src/freertos.c ****   .name = "INS_TASK",
+  54:Src/freertos.c ****   .stack_size = 1024 * 4,
+  55:Src/freertos.c ****   .priority = (osPriority_t) osPriorityRealtime,
+  56:Src/freertos.c **** };
+  57:Src/freertos.c **** /* Definitions for communicatetask */
+  58:Src/freertos.c **** osThreadId_t communicatetaskHandle;
+  59:Src/freertos.c **** const osThreadAttr_t communicatetask_attributes = {
+  60:Src/freertos.c ****   .name = "communicatetask",
+  61:Src/freertos.c ****   .stack_size = 128 * 4,
+  62:Src/freertos.c ****   .priority = (osPriority_t) osPriorityNormal,
+  63:Src/freertos.c **** };
+  64:Src/freertos.c **** /* Definitions for Shoottask */
+  65:Src/freertos.c **** osThreadId_t ShoottaskHandle;
+  66:Src/freertos.c **** const osThreadAttr_t Shoottask_attributes = {
+  67:Src/freertos.c ****   .name = "Shoottask",
+  68:Src/freertos.c ****   .stack_size = 128 * 4,
+  69:Src/freertos.c ****   .priority = (osPriority_t) osPriorityNormal,
+  70:Src/freertos.c **** };
+  71:Src/freertos.c **** /* Definitions for devicemonitor */
+  72:Src/freertos.c **** osThreadId_t devicemonitorHandle;
+  73:Src/freertos.c **** const osThreadAttr_t devicemonitor_attributes = {
+  74:Src/freertos.c ****   .name = "devicemonitor",
+  75:Src/freertos.c ****   .stack_size = 128 * 4,
+  76:Src/freertos.c ****   .priority = (osPriority_t) osPriorityNormal,
+  77:Src/freertos.c **** };
+  78:Src/freertos.c **** /* Definitions for infomationupdat */
+  79:Src/freertos.c **** osThreadId_t infomationupdatHandle;
+  80:Src/freertos.c **** const osThreadAttr_t infomationupdat_attributes = {
+  81:Src/freertos.c ****   .name = "infomationupdat",
+  82:Src/freertos.c ****   .stack_size = 128 * 4,
+  83:Src/freertos.c ****   .priority = (osPriority_t) osPriorityNormal,
+  84:Src/freertos.c **** };
+  85:Src/freertos.c **** 
+  86:Src/freertos.c **** /* Private function prototypes -----------------------------------------------*/
+  87:Src/freertos.c **** /* USER CODE BEGIN FunctionPrototypes */
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s 			page 3
+
+
+  88:Src/freertos.c **** 
+  89:Src/freertos.c **** /* USER CODE END FunctionPrototypes */
+  90:Src/freertos.c **** 
+  91:Src/freertos.c **** void INS_task(void *argument);
+  92:Src/freertos.c **** void comutask(void *argument);
+  93:Src/freertos.c **** void shoottask(void *argument);
+  94:Src/freertos.c **** void devmoni(void *argument);
+  95:Src/freertos.c **** void infoupdate(void *argument);
+  96:Src/freertos.c **** 
+  97:Src/freertos.c **** void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+  98:Src/freertos.c **** 
+  99:Src/freertos.c **** /**
+ 100:Src/freertos.c ****   * @brief  FreeRTOS initialization
+ 101:Src/freertos.c ****   * @param  None
+ 102:Src/freertos.c ****   * @retval None
+ 103:Src/freertos.c ****   */
+ 104:Src/freertos.c **** void MX_FREERTOS_Init(void) {
+ 105:Src/freertos.c ****   /* USER CODE BEGIN Init */
+ 106:Src/freertos.c **** 
+ 107:Src/freertos.c ****   /* USER CODE END Init */
+ 108:Src/freertos.c **** 
+ 109:Src/freertos.c ****   /* USER CODE BEGIN RTOS_MUTEX */
+ 110:Src/freertos.c ****   /* add mutexes, ... */
+ 111:Src/freertos.c ****   /* USER CODE END RTOS_MUTEX */
+ 112:Src/freertos.c **** 
+ 113:Src/freertos.c ****   /* USER CODE BEGIN RTOS_SEMAPHORES */
+ 114:Src/freertos.c ****   /* add semaphores, ... */
+ 115:Src/freertos.c ****   /* USER CODE END RTOS_SEMAPHORES */
+ 116:Src/freertos.c **** 
+ 117:Src/freertos.c ****   /* USER CODE BEGIN RTOS_TIMERS */
+ 118:Src/freertos.c ****   /* start timers, add new ones, ... */
+ 119:Src/freertos.c ****   /* USER CODE END RTOS_TIMERS */
+ 120:Src/freertos.c **** 
+ 121:Src/freertos.c ****   /* USER CODE BEGIN RTOS_QUEUES */
+ 122:Src/freertos.c ****   /* add queues, ... */
+ 123:Src/freertos.c ****   /* USER CODE END RTOS_QUEUES */
+ 124:Src/freertos.c **** 
+ 125:Src/freertos.c ****   /* Create the thread(s) */
+ 126:Src/freertos.c ****   /* creation of INS_TASK */
+ 127:Src/freertos.c ****   INS_TASKHandle = osThreadNew(INS_task, NULL, &INS_TASK_attributes);
+ 128:Src/freertos.c **** 
+ 129:Src/freertos.c ****   /* creation of communicatetask */
+ 130:Src/freertos.c ****   communicatetaskHandle = osThreadNew(comutask, NULL, &communicatetask_attributes);
+ 131:Src/freertos.c **** 
+ 132:Src/freertos.c ****   /* creation of Shoottask */
+ 133:Src/freertos.c ****   ShoottaskHandle = osThreadNew(shoottask, NULL, &Shoottask_attributes);
+ 134:Src/freertos.c **** 
+ 135:Src/freertos.c ****   /* creation of devicemonitor */
+ 136:Src/freertos.c ****   devicemonitorHandle = osThreadNew(devmoni, NULL, &devicemonitor_attributes);
+ 137:Src/freertos.c **** 
+ 138:Src/freertos.c ****   /* creation of infomationupdat */
+ 139:Src/freertos.c ****   infomationupdatHandle = osThreadNew(infoupdate, NULL, &infomationupdat_attributes);
+ 140:Src/freertos.c **** 
+ 141:Src/freertos.c ****   /* USER CODE BEGIN RTOS_THREADS */
+ 142:Src/freertos.c ****   /* add threads, ... */
+ 143:Src/freertos.c ****   /* USER CODE END RTOS_THREADS */
+ 144:Src/freertos.c **** 
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s 			page 4
+
+
+ 145:Src/freertos.c ****   /* USER CODE BEGIN RTOS_EVENTS */
+ 146:Src/freertos.c ****   /* add events, ... */
+ 147:Src/freertos.c ****   /* USER CODE END RTOS_EVENTS */
+ 148:Src/freertos.c **** 
+ 149:Src/freertos.c **** }
+ 150:Src/freertos.c **** 
+ 151:Src/freertos.c **** /* USER CODE BEGIN Header_INS_task */
+ 152:Src/freertos.c **** /**
+ 153:Src/freertos.c ****   * @brief  Function implementing the INS_TASK thread.
+ 154:Src/freertos.c ****   * @param  argument: Not used
+ 155:Src/freertos.c ****   * @retval None
+ 156:Src/freertos.c ****   */
+ 157:Src/freertos.c **** /* USER CODE END Header_INS_task */
+ 158:Src/freertos.c **** __weak void INS_task(void *argument)
+ 159:Src/freertos.c **** {
+  29              		.loc 1 159 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              	.LVL0:
+  34              		.loc 1 159 1 is_stmt 0 view .LVU1
+  35 0000 08B5     		push	{r3, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 3, -8
+  39              		.cfi_offset 14, -4
+  40              	.LVL1:
+  41              	.L2:
+ 160:Src/freertos.c ****   /* USER CODE BEGIN INS_task */
+ 161:Src/freertos.c ****   /* Infinite loop */
+ 162:Src/freertos.c ****   for(;;)
+  42              		.loc 1 162 3 is_stmt 1 discriminator 1 view .LVU2
+ 163:Src/freertos.c ****   {
+ 164:Src/freertos.c ****     osDelay(1);
+  43              		.loc 1 164 5 discriminator 1 view .LVU3
+  44 0002 0120     		movs	r0, #1
+  45 0004 FFF7FEFF 		bl	osDelay
+  46              	.LVL2:
+ 162:Src/freertos.c ****   {
+  47              		.loc 1 162 8 discriminator 1 view .LVU4
+  48 0008 FBE7     		b	.L2
+  49              		.cfi_endproc
+  50              	.LFE135:
+  52              		.section	.text.comutask,"ax",%progbits
+  53              		.align	1
+  54              		.weak	comutask
+  55              		.syntax unified
+  56              		.thumb
+  57              		.thumb_func
+  59              	comutask:
+  60              	.LFB136:
+ 165:Src/freertos.c ****   }
+ 166:Src/freertos.c ****   /* USER CODE END INS_task */
+ 167:Src/freertos.c **** }
+ 168:Src/freertos.c **** 
+ 169:Src/freertos.c **** /* USER CODE BEGIN Header_comutask */
+ 170:Src/freertos.c **** /**
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s 			page 5
+
+
+ 171:Src/freertos.c **** * @brief Function implementing the communicatetask thread.
+ 172:Src/freertos.c **** * @param argument: Not used
+ 173:Src/freertos.c **** * @retval None
+ 174:Src/freertos.c **** */
+ 175:Src/freertos.c **** /* USER CODE END Header_comutask */
+ 176:Src/freertos.c **** __weak void comutask(void *argument)
+ 177:Src/freertos.c **** {
+  61              		.loc 1 177 1 view -0
+  62              		.cfi_startproc
+  63              		@ args = 0, pretend = 0, frame = 0
+  64              		@ frame_needed = 0, uses_anonymous_args = 0
+  65              	.LVL3:
+  66              		.loc 1 177 1 is_stmt 0 view .LVU6
+  67 0000 08B5     		push	{r3, lr}
+  68              	.LCFI1:
+  69              		.cfi_def_cfa_offset 8
+  70              		.cfi_offset 3, -8
+  71              		.cfi_offset 14, -4
+  72              	.LVL4:
+  73              	.L5:
+ 178:Src/freertos.c ****   /* USER CODE BEGIN comutask */
+ 179:Src/freertos.c ****   /* Infinite loop */
+ 180:Src/freertos.c ****   for(;;)
+  74              		.loc 1 180 3 is_stmt 1 discriminator 1 view .LVU7
+ 181:Src/freertos.c ****   {
+ 182:Src/freertos.c ****     osDelay(1);
+  75              		.loc 1 182 5 discriminator 1 view .LVU8
+  76 0002 0120     		movs	r0, #1
+  77 0004 FFF7FEFF 		bl	osDelay
+  78              	.LVL5:
+ 180:Src/freertos.c ****   {
+  79              		.loc 1 180 8 discriminator 1 view .LVU9
+  80 0008 FBE7     		b	.L5
+  81              		.cfi_endproc
+  82              	.LFE136:
+  84              		.section	.text.shoottask,"ax",%progbits
+  85              		.align	1
+  86              		.weak	shoottask
+  87              		.syntax unified
+  88              		.thumb
+  89              		.thumb_func
+  91              	shoottask:
+  92              	.LFB137:
+ 183:Src/freertos.c ****   }
+ 184:Src/freertos.c ****   /* USER CODE END comutask */
+ 185:Src/freertos.c **** }
+ 186:Src/freertos.c **** 
+ 187:Src/freertos.c **** /* USER CODE BEGIN Header_shoottask */
+ 188:Src/freertos.c **** /**
+ 189:Src/freertos.c **** * @brief Function implementing the Shoottask thread.
+ 190:Src/freertos.c **** * @param argument: Not used
+ 191:Src/freertos.c **** * @retval None
+ 192:Src/freertos.c **** */
+ 193:Src/freertos.c **** /* USER CODE END Header_shoottask */
+ 194:Src/freertos.c **** __weak void shoottask(void *argument)
+ 195:Src/freertos.c **** {
+  93              		.loc 1 195 1 view -0
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s 			page 6
+
+
+  94              		.cfi_startproc
+  95              		@ args = 0, pretend = 0, frame = 0
+  96              		@ frame_needed = 0, uses_anonymous_args = 0
+  97              	.LVL6:
+  98              		.loc 1 195 1 is_stmt 0 view .LVU11
+  99 0000 08B5     		push	{r3, lr}
+ 100              	.LCFI2:
+ 101              		.cfi_def_cfa_offset 8
+ 102              		.cfi_offset 3, -8
+ 103              		.cfi_offset 14, -4
+ 104              	.LVL7:
+ 105              	.L8:
+ 196:Src/freertos.c ****   /* USER CODE BEGIN shoottask */
+ 197:Src/freertos.c ****   /* Infinite loop */
+ 198:Src/freertos.c ****   for(;;)
+ 106              		.loc 1 198 3 is_stmt 1 discriminator 1 view .LVU12
+ 199:Src/freertos.c ****   {
+ 200:Src/freertos.c ****     osDelay(1);
+ 107              		.loc 1 200 5 discriminator 1 view .LVU13
+ 108 0002 0120     		movs	r0, #1
+ 109 0004 FFF7FEFF 		bl	osDelay
+ 110              	.LVL8:
+ 198:Src/freertos.c ****   {
+ 111              		.loc 1 198 8 discriminator 1 view .LVU14
+ 112 0008 FBE7     		b	.L8
+ 113              		.cfi_endproc
+ 114              	.LFE137:
+ 116              		.section	.text.devmoni,"ax",%progbits
+ 117              		.align	1
+ 118              		.weak	devmoni
+ 119              		.syntax unified
+ 120              		.thumb
+ 121              		.thumb_func
+ 123              	devmoni:
+ 124              	.LFB138:
+ 201:Src/freertos.c ****   }
+ 202:Src/freertos.c ****   /* USER CODE END shoottask */
+ 203:Src/freertos.c **** }
+ 204:Src/freertos.c **** 
+ 205:Src/freertos.c **** /* USER CODE BEGIN Header_devmoni */
+ 206:Src/freertos.c **** /**
+ 207:Src/freertos.c **** * @brief Function implementing the devicemonitor thread.
+ 208:Src/freertos.c **** * @param argument: Not used
+ 209:Src/freertos.c **** * @retval None
+ 210:Src/freertos.c **** */
+ 211:Src/freertos.c **** /* USER CODE END Header_devmoni */
+ 212:Src/freertos.c **** __weak void devmoni(void *argument)
+ 213:Src/freertos.c **** {
+ 125              		.loc 1 213 1 view -0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 0
+ 128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 129              	.LVL9:
+ 130              		.loc 1 213 1 is_stmt 0 view .LVU16
+ 131 0000 08B5     		push	{r3, lr}
+ 132              	.LCFI3:
+ 133              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s 			page 7
+
+
+ 134              		.cfi_offset 3, -8
+ 135              		.cfi_offset 14, -4
+ 136              	.LVL10:
+ 137              	.L11:
+ 214:Src/freertos.c ****   /* USER CODE BEGIN devmoni */
+ 215:Src/freertos.c ****   /* Infinite loop */
+ 216:Src/freertos.c ****   for(;;)
+ 138              		.loc 1 216 3 is_stmt 1 discriminator 1 view .LVU17
+ 217:Src/freertos.c ****   {
+ 218:Src/freertos.c ****     osDelay(1);
+ 139              		.loc 1 218 5 discriminator 1 view .LVU18
+ 140 0002 0120     		movs	r0, #1
+ 141 0004 FFF7FEFF 		bl	osDelay
+ 142              	.LVL11:
+ 216:Src/freertos.c ****   {
+ 143              		.loc 1 216 8 discriminator 1 view .LVU19
+ 144 0008 FBE7     		b	.L11
+ 145              		.cfi_endproc
+ 146              	.LFE138:
+ 148              		.section	.text.infoupdate,"ax",%progbits
+ 149              		.align	1
+ 150              		.weak	infoupdate
+ 151              		.syntax unified
+ 152              		.thumb
+ 153              		.thumb_func
+ 155              	infoupdate:
+ 156              	.LFB139:
+ 219:Src/freertos.c ****   }
+ 220:Src/freertos.c ****   /* USER CODE END devmoni */
+ 221:Src/freertos.c **** }
+ 222:Src/freertos.c **** 
+ 223:Src/freertos.c **** /* USER CODE BEGIN Header_infoupdate */
+ 224:Src/freertos.c **** /**
+ 225:Src/freertos.c **** * @brief Function implementing the infomationupdat thread.
+ 226:Src/freertos.c **** * @param argument: Not used
+ 227:Src/freertos.c **** * @retval None
+ 228:Src/freertos.c **** */
+ 229:Src/freertos.c **** /* USER CODE END Header_infoupdate */
+ 230:Src/freertos.c **** __weak void infoupdate(void *argument)
+ 231:Src/freertos.c **** {
+ 157              		.loc 1 231 1 view -0
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 0
+ 160              		@ frame_needed = 0, uses_anonymous_args = 0
+ 161              	.LVL12:
+ 162              		.loc 1 231 1 is_stmt 0 view .LVU21
+ 163 0000 08B5     		push	{r3, lr}
+ 164              	.LCFI4:
+ 165              		.cfi_def_cfa_offset 8
+ 166              		.cfi_offset 3, -8
+ 167              		.cfi_offset 14, -4
+ 168              	.LVL13:
+ 169              	.L14:
+ 232:Src/freertos.c ****   /* USER CODE BEGIN infoupdate */
+ 233:Src/freertos.c ****   /* Infinite loop */
+ 234:Src/freertos.c ****   for(;;)
+ 170              		.loc 1 234 3 is_stmt 1 discriminator 1 view .LVU22
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s 			page 8
+
+
+ 235:Src/freertos.c ****   {
+ 236:Src/freertos.c ****     osDelay(1);
+ 171              		.loc 1 236 5 discriminator 1 view .LVU23
+ 172 0002 0120     		movs	r0, #1
+ 173 0004 FFF7FEFF 		bl	osDelay
+ 174              	.LVL14:
+ 234:Src/freertos.c ****   {
+ 175              		.loc 1 234 8 discriminator 1 view .LVU24
+ 176 0008 FBE7     		b	.L14
+ 177              		.cfi_endproc
+ 178              	.LFE139:
+ 180              		.section	.text.MX_FREERTOS_Init,"ax",%progbits
+ 181              		.align	1
+ 182              		.global	MX_FREERTOS_Init
+ 183              		.syntax unified
+ 184              		.thumb
+ 185              		.thumb_func
+ 187              	MX_FREERTOS_Init:
+ 188              	.LFB134:
+ 104:Src/freertos.c ****   /* USER CODE BEGIN Init */
+ 189              		.loc 1 104 29 view -0
+ 190              		.cfi_startproc
+ 191              		@ args = 0, pretend = 0, frame = 0
+ 192              		@ frame_needed = 0, uses_anonymous_args = 0
+ 193 0000 08B5     		push	{r3, lr}
+ 194              	.LCFI5:
+ 195              		.cfi_def_cfa_offset 8
+ 196              		.cfi_offset 3, -8
+ 197              		.cfi_offset 14, -4
+ 127:Src/freertos.c **** 
+ 198              		.loc 1 127 3 view .LVU26
+ 127:Src/freertos.c **** 
+ 199              		.loc 1 127 20 is_stmt 0 view .LVU27
+ 200 0002 124A     		ldr	r2, .L18
+ 201 0004 0021     		movs	r1, #0
+ 202 0006 1248     		ldr	r0, .L18+4
+ 203 0008 FFF7FEFF 		bl	osThreadNew
+ 204              	.LVL15:
+ 127:Src/freertos.c **** 
+ 205              		.loc 1 127 18 view .LVU28
+ 206 000c 114B     		ldr	r3, .L18+8
+ 207 000e 1860     		str	r0, [r3]
+ 130:Src/freertos.c **** 
+ 208              		.loc 1 130 3 is_stmt 1 view .LVU29
+ 130:Src/freertos.c **** 
+ 209              		.loc 1 130 27 is_stmt 0 view .LVU30
+ 210 0010 114A     		ldr	r2, .L18+12
+ 211 0012 0021     		movs	r1, #0
+ 212 0014 1148     		ldr	r0, .L18+16
+ 213 0016 FFF7FEFF 		bl	osThreadNew
+ 214              	.LVL16:
+ 130:Src/freertos.c **** 
+ 215              		.loc 1 130 25 view .LVU31
+ 216 001a 114B     		ldr	r3, .L18+20
+ 217 001c 1860     		str	r0, [r3]
+ 133:Src/freertos.c **** 
+ 218              		.loc 1 133 3 is_stmt 1 view .LVU32
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s 			page 9
+
+
+ 133:Src/freertos.c **** 
+ 219              		.loc 1 133 21 is_stmt 0 view .LVU33
+ 220 001e 114A     		ldr	r2, .L18+24
+ 221 0020 0021     		movs	r1, #0
+ 222 0022 1148     		ldr	r0, .L18+28
+ 223 0024 FFF7FEFF 		bl	osThreadNew
+ 224              	.LVL17:
+ 133:Src/freertos.c **** 
+ 225              		.loc 1 133 19 view .LVU34
+ 226 0028 104B     		ldr	r3, .L18+32
+ 227 002a 1860     		str	r0, [r3]
+ 136:Src/freertos.c **** 
+ 228              		.loc 1 136 3 is_stmt 1 view .LVU35
+ 136:Src/freertos.c **** 
+ 229              		.loc 1 136 25 is_stmt 0 view .LVU36
+ 230 002c 104A     		ldr	r2, .L18+36
+ 231 002e 0021     		movs	r1, #0
+ 232 0030 1048     		ldr	r0, .L18+40
+ 233 0032 FFF7FEFF 		bl	osThreadNew
+ 234              	.LVL18:
+ 136:Src/freertos.c **** 
+ 235              		.loc 1 136 23 view .LVU37
+ 236 0036 104B     		ldr	r3, .L18+44
+ 237 0038 1860     		str	r0, [r3]
+ 139:Src/freertos.c **** 
+ 238              		.loc 1 139 3 is_stmt 1 view .LVU38
+ 139:Src/freertos.c **** 
+ 239              		.loc 1 139 27 is_stmt 0 view .LVU39
+ 240 003a 104A     		ldr	r2, .L18+48
+ 241 003c 0021     		movs	r1, #0
+ 242 003e 1048     		ldr	r0, .L18+52
+ 243 0040 FFF7FEFF 		bl	osThreadNew
+ 244              	.LVL19:
+ 139:Src/freertos.c **** 
+ 245              		.loc 1 139 25 view .LVU40
+ 246 0044 0F4B     		ldr	r3, .L18+56
+ 247 0046 1860     		str	r0, [r3]
+ 149:Src/freertos.c **** 
+ 248              		.loc 1 149 1 view .LVU41
+ 249 0048 08BD     		pop	{r3, pc}
+ 250              	.L19:
+ 251 004a 00BF     		.align	2
+ 252              	.L18:
+ 253 004c 00000000 		.word	.LANCHOR0
+ 254 0050 00000000 		.word	INS_task
+ 255 0054 00000000 		.word	.LANCHOR1
+ 256 0058 00000000 		.word	.LANCHOR2
+ 257 005c 00000000 		.word	comutask
+ 258 0060 00000000 		.word	.LANCHOR3
+ 259 0064 00000000 		.word	.LANCHOR4
+ 260 0068 00000000 		.word	shoottask
+ 261 006c 00000000 		.word	.LANCHOR5
+ 262 0070 00000000 		.word	.LANCHOR6
+ 263 0074 00000000 		.word	devmoni
+ 264 0078 00000000 		.word	.LANCHOR7
+ 265 007c 00000000 		.word	.LANCHOR8
+ 266 0080 00000000 		.word	infoupdate
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s 			page 10
+
+
+ 267 0084 00000000 		.word	.LANCHOR9
+ 268              		.cfi_endproc
+ 269              	.LFE134:
+ 271              		.global	infomationupdat_attributes
+ 272              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 273              		.align	2
+ 274              	.LC0:
+ 275 0000 696E666F 		.ascii	"infomationupdat\000"
+ 275      6D617469 
+ 275      6F6E7570 
+ 275      64617400 
+ 276              		.global	infomationupdatHandle
+ 277              		.global	devicemonitor_attributes
+ 278              		.align	2
+ 279              	.LC1:
+ 280 0010 64657669 		.ascii	"devicemonitor\000"
+ 280      63656D6F 
+ 280      6E69746F 
+ 280      7200
+ 281              		.global	devicemonitorHandle
+ 282              		.global	Shoottask_attributes
+ 283 001e 0000     		.align	2
+ 284              	.LC2:
+ 285 0020 53686F6F 		.ascii	"Shoottask\000"
+ 285      74746173 
+ 285      6B00
+ 286              		.global	ShoottaskHandle
+ 287              		.global	communicatetask_attributes
+ 288 002a 0000     		.align	2
+ 289              	.LC3:
+ 290 002c 636F6D6D 		.ascii	"communicatetask\000"
+ 290      756E6963 
+ 290      61746574 
+ 290      61736B00 
+ 291              		.global	communicatetaskHandle
+ 292              		.global	INS_TASK_attributes
+ 293              		.align	2
+ 294              	.LC4:
+ 295 003c 494E535F 		.ascii	"INS_TASK\000"
+ 295      5441534B 
+ 295      00
+ 296              		.global	INS_TASKHandle
+ 297              		.section	.bss.INS_TASKHandle,"aw",%nobits
+ 298              		.align	2
+ 299              		.set	.LANCHOR1,. + 0
+ 302              	INS_TASKHandle:
+ 303 0000 00000000 		.space	4
+ 304              		.section	.bss.ShoottaskHandle,"aw",%nobits
+ 305              		.align	2
+ 306              		.set	.LANCHOR5,. + 0
+ 309              	ShoottaskHandle:
+ 310 0000 00000000 		.space	4
+ 311              		.section	.bss.communicatetaskHandle,"aw",%nobits
+ 312              		.align	2
+ 313              		.set	.LANCHOR3,. + 0
+ 316              	communicatetaskHandle:
+ 317 0000 00000000 		.space	4
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s 			page 11
+
+
+ 318              		.section	.bss.devicemonitorHandle,"aw",%nobits
+ 319              		.align	2
+ 320              		.set	.LANCHOR7,. + 0
+ 323              	devicemonitorHandle:
+ 324 0000 00000000 		.space	4
+ 325              		.section	.bss.infomationupdatHandle,"aw",%nobits
+ 326              		.align	2
+ 327              		.set	.LANCHOR9,. + 0
+ 330              	infomationupdatHandle:
+ 331 0000 00000000 		.space	4
+ 332              		.section	.rodata.INS_TASK_attributes,"a"
+ 333              		.align	2
+ 334              		.set	.LANCHOR0,. + 0
+ 337              	INS_TASK_attributes:
+ 338 0000 3C000000 		.word	.LC4
+ 339 0004 00000000 		.space	16
+ 339      00000000 
+ 339      00000000 
+ 339      00000000 
+ 340 0014 00100000 		.word	4096
+ 341 0018 30000000 		.word	48
+ 342 001c 00000000 		.space	8
+ 342      00000000 
+ 343              		.section	.rodata.Shoottask_attributes,"a"
+ 344              		.align	2
+ 345              		.set	.LANCHOR4,. + 0
+ 348              	Shoottask_attributes:
+ 349 0000 20000000 		.word	.LC2
+ 350 0004 00000000 		.space	16
+ 350      00000000 
+ 350      00000000 
+ 350      00000000 
+ 351 0014 00020000 		.word	512
+ 352 0018 18000000 		.word	24
+ 353 001c 00000000 		.space	8
+ 353      00000000 
+ 354              		.section	.rodata.communicatetask_attributes,"a"
+ 355              		.align	2
+ 356              		.set	.LANCHOR2,. + 0
+ 359              	communicatetask_attributes:
+ 360 0000 2C000000 		.word	.LC3
+ 361 0004 00000000 		.space	16
+ 361      00000000 
+ 361      00000000 
+ 361      00000000 
+ 362 0014 00020000 		.word	512
+ 363 0018 18000000 		.word	24
+ 364 001c 00000000 		.space	8
+ 364      00000000 
+ 365              		.section	.rodata.devicemonitor_attributes,"a"
+ 366              		.align	2
+ 367              		.set	.LANCHOR6,. + 0
+ 370              	devicemonitor_attributes:
+ 371 0000 10000000 		.word	.LC1
+ 372 0004 00000000 		.space	16
+ 372      00000000 
+ 372      00000000 
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s 			page 12
+
+
+ 372      00000000 
+ 373 0014 00020000 		.word	512
+ 374 0018 18000000 		.word	24
+ 375 001c 00000000 		.space	8
+ 375      00000000 
+ 376              		.section	.rodata.infomationupdat_attributes,"a"
+ 377              		.align	2
+ 378              		.set	.LANCHOR8,. + 0
+ 381              	infomationupdat_attributes:
+ 382 0000 00000000 		.word	.LC0
+ 383 0004 00000000 		.space	16
+ 383      00000000 
+ 383      00000000 
+ 383      00000000 
+ 384 0014 00020000 		.word	512
+ 385 0018 18000000 		.word	24
+ 386 001c 00000000 		.space	8
+ 386      00000000 
+ 387              		.text
+ 388              	.Letext0:
+ 389              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 390              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 391              		.file 4 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 freertos.c
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:20     .text.INS_task:00000000 $t
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:26     .text.INS_task:00000000 INS_task
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:53     .text.comutask:00000000 $t
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:59     .text.comutask:00000000 comutask
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:85     .text.shoottask:00000000 $t
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:91     .text.shoottask:00000000 shoottask
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:117    .text.devmoni:00000000 $t
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:123    .text.devmoni:00000000 devmoni
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:149    .text.infoupdate:00000000 $t
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:155    .text.infoupdate:00000000 infoupdate
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:181    .text.MX_FREERTOS_Init:00000000 $t
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:187    .text.MX_FREERTOS_Init:00000000 MX_FREERTOS_Init
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:253    .text.MX_FREERTOS_Init:0000004c $d
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:381    .rodata.infomationupdat_attributes:00000000 infomationupdat_attributes
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:273    .rodata.str1.4:00000000 $d
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:330    .bss.infomationupdatHandle:00000000 infomationupdatHandle
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:370    .rodata.devicemonitor_attributes:00000000 devicemonitor_attributes
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:323    .bss.devicemonitorHandle:00000000 devicemonitorHandle
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:348    .rodata.Shoottask_attributes:00000000 Shoottask_attributes
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:309    .bss.ShoottaskHandle:00000000 ShoottaskHandle
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:359    .rodata.communicatetask_attributes:00000000 communicatetask_attributes
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:316    .bss.communicatetaskHandle:00000000 communicatetaskHandle
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:337    .rodata.INS_TASK_attributes:00000000 INS_TASK_attributes
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:302    .bss.INS_TASKHandle:00000000 INS_TASKHandle
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:298    .bss.INS_TASKHandle:00000000 $d
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:305    .bss.ShoottaskHandle:00000000 $d
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:312    .bss.communicatetaskHandle:00000000 $d
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:319    .bss.devicemonitorHandle:00000000 $d
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:326    .bss.infomationupdatHandle:00000000 $d
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:333    .rodata.INS_TASK_attributes:00000000 $d
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:344    .rodata.Shoottask_attributes:00000000 $d
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:355    .rodata.communicatetask_attributes:00000000 $d
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:366    .rodata.devicemonitor_attributes:00000000 $d
+C:\Users\admin\AppData\Local\Temp\ccQY1Tce.s:377    .rodata.infomationupdat_attributes:00000000 $d
+
+UNDEFINED SYMBOLS
+osDelay
+osThreadNew

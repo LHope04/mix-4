@@ -1,0 +1,184 @@
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccGlryHp.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"init.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.chasmotinit,"ax",%progbits
+  20              		.align	1
+  21              		.global	chasmotinit
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	chasmotinit:
+  27              	.LFB134:
+  28              		.file 1 "src/tasks/init.c"
+   1:src/tasks/init.c **** #include "main.h"
+   2:src/tasks/init.c **** void chasmotinit()
+   3:src/tasks/init.c **** {
+  29              		.loc 1 3 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+   4:src/tasks/init.c ****     init_shootmot_para(fric, &trig);
+  38              		.loc 1 4 5 view .LVU1
+  39 0002 0549     		ldr	r1, .L3
+  40 0004 0548     		ldr	r0, .L3+4
+  41 0006 FFF7FEFF 		bl	init_shootmot_para
+  42              	.LVL0:
+   5:src/tasks/init.c ****     init_shootmot_pid(fricspid, &trigapid, &trigspid);
+  43              		.loc 1 5 5 view .LVU2
+  44 000a 054A     		ldr	r2, .L3+8
+  45 000c 0549     		ldr	r1, .L3+12
+  46 000e 0648     		ldr	r0, .L3+16
+  47 0010 FFF7FEFF 		bl	init_shootmot_pid
+  48              	.LVL1:
+   6:src/tasks/init.c **** }
+  49              		.loc 1 6 1 is_stmt 0 view .LVU3
+  50 0014 08BD     		pop	{r3, pc}
+  51              	.L4:
+  52 0016 00BF     		.align	2
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccGlryHp.s 			page 2
+
+
+  53              	.L3:
+  54 0018 00000000 		.word	trig
+  55 001c 00000000 		.word	fric
+  56 0020 00000000 		.word	trigspid
+  57 0024 00000000 		.word	trigapid
+  58 0028 00000000 		.word	fricspid
+  59              		.cfi_endproc
+  60              	.LFE134:
+  62              		.section	.text.devinit,"ax",%progbits
+  63              		.align	1
+  64              		.global	devinit
+  65              		.syntax unified
+  66              		.thumb
+  67              		.thumb_func
+  69              	devinit:
+  70              	.LFB135:
+   7:src/tasks/init.c **** 
+   8:src/tasks/init.c **** void devinit()
+   9:src/tasks/init.c **** {
+  71              		.loc 1 9 1 is_stmt 1 view -0
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75 0000 08B5     		push	{r3, lr}
+  76              	.LCFI1:
+  77              		.cfi_def_cfa_offset 8
+  78              		.cfi_offset 3, -8
+  79              		.cfi_offset 14, -4
+  10:src/tasks/init.c ****     can_filter_init();
+  80              		.loc 1 10 5 view .LVU5
+  81 0002 FFF7FEFF 		bl	can_filter_init
+  82              	.LVL2:
+  11:src/tasks/init.c ****     HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_3);
+  83              		.loc 1 11 5 view .LVU6
+  84 0006 0821     		movs	r1, #8
+  85 0008 0148     		ldr	r0, .L7
+  86 000a FFF7FEFF 		bl	HAL_TIM_PWM_Start
+  87              	.LVL3:
+  12:src/tasks/init.c **** }
+  88              		.loc 1 12 1 is_stmt 0 view .LVU7
+  89 000e 08BD     		pop	{r3, pc}
+  90              	.L8:
+  91              		.align	2
+  92              	.L7:
+  93 0010 00000000 		.word	htim8
+  94              		.cfi_endproc
+  95              	.LFE135:
+  97              		.section	.text.userinit,"ax",%progbits
+  98              		.align	1
+  99              		.global	userinit
+ 100              		.syntax unified
+ 101              		.thumb
+ 102              		.thumb_func
+ 104              	userinit:
+ 105              	.LFB136:
+  13:src/tasks/init.c **** 
+  14:src/tasks/init.c **** void userinit()
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccGlryHp.s 			page 3
+
+
+  15:src/tasks/init.c **** {
+ 106              		.loc 1 15 1 is_stmt 1 view -0
+ 107              		.cfi_startproc
+ 108              		@ args = 0, pretend = 0, frame = 0
+ 109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110 0000 08B5     		push	{r3, lr}
+ 111              	.LCFI2:
+ 112              		.cfi_def_cfa_offset 8
+ 113              		.cfi_offset 3, -8
+ 114              		.cfi_offset 14, -4
+  16:src/tasks/init.c ****     chasmotinit();
+ 115              		.loc 1 16 5 view .LVU9
+ 116 0002 FFF7FEFF 		bl	chasmotinit
+ 117              	.LVL4:
+  17:src/tasks/init.c ****     devinit();
+ 118              		.loc 1 17 5 view .LVU10
+ 119 0006 FFF7FEFF 		bl	devinit
+ 120              	.LVL5:
+  18:src/tasks/init.c **** }
+ 121              		.loc 1 18 1 is_stmt 0 view .LVU11
+ 122 000a 08BD     		pop	{r3, pc}
+ 123              		.cfi_endproc
+ 124              	.LFE136:
+ 126              		.text
+ 127              	.Letext0:
+ 128              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 129              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 130              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
+ 131              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 132              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 133              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+ 134              		.file 8 "Inc/pid.h"
+ 135              		.file 9 "Inc/motlib.h"
+ 136              		.file 10 "Inc/shoottask.h"
+ 137              		.file 11 "Inc/tim.h"
+ 138              		.file 12 "Inc/can_bsp.h"
+ARM GAS  C:\Users\admin\AppData\Local\Temp\ccGlryHp.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 init.c
+C:\Users\admin\AppData\Local\Temp\ccGlryHp.s:20     .text.chasmotinit:00000000 $t
+C:\Users\admin\AppData\Local\Temp\ccGlryHp.s:26     .text.chasmotinit:00000000 chasmotinit
+C:\Users\admin\AppData\Local\Temp\ccGlryHp.s:54     .text.chasmotinit:00000018 $d
+C:\Users\admin\AppData\Local\Temp\ccGlryHp.s:63     .text.devinit:00000000 $t
+C:\Users\admin\AppData\Local\Temp\ccGlryHp.s:69     .text.devinit:00000000 devinit
+C:\Users\admin\AppData\Local\Temp\ccGlryHp.s:93     .text.devinit:00000010 $d
+C:\Users\admin\AppData\Local\Temp\ccGlryHp.s:98     .text.userinit:00000000 $t
+C:\Users\admin\AppData\Local\Temp\ccGlryHp.s:104    .text.userinit:00000000 userinit
+
+UNDEFINED SYMBOLS
+init_shootmot_para
+init_shootmot_pid
+trig
+fric
+trigspid
+trigapid
+fricspid
+can_filter_init
+HAL_TIM_PWM_Start
+htim8
